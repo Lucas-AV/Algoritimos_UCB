@@ -1,0 +1,14 @@
+algoritmo Ex2_Lista1_Raio;
+// Síntese
+//  Objetivo:  Calcular a área de um círculo de acordo com o raio fornecido
+//  Entrada :  Raio
+//  Saída   :  Area
+
+principal
+	// Declarações
+	real Raio;
+	// Instruções
+	escreva("Informe o valor do raio do círculo: ");
+	leia(Raio);
+	escreva("> Um raio de ",Raio,"x gera um círculo com área de: ",Raio*Raio*3.14,"x²");
+fimPrincipal

@@ -1,0 +1,25 @@
+algoritmo Ex3_Lista1_media;
+// Síntese
+//  Objetivo:  Calcular a média aritimética de 3 números
+//  Entrada :  n1, n2, n3
+//  Saída   :  media
+
+
+principal
+	// Declarações
+	real n1;
+	real n2;
+	real n3;
+	// Instruções
+	escreval("--");
+	escreva("> De o valor para o primeiro número: ");
+	leia(n1);
+	
+	escreva("> De o valor para o segundo número: ");
+	leia(n2);
+	
+	escreva("> De o valor para o terceiro número: ");
+	leia(n3);
+	escreval("");
+	escreva("> A média aritimética destes números: equivale a: ", (n1+n2+n3)/3);
+fimPrincipal
