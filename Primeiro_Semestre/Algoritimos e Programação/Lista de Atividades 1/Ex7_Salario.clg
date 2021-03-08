@@ -38,7 +38,7 @@ principal
 
 	Salario = G_Hora*H_Trabalhadas*D_Trabalhados;
 	
-	escreval("")
+	escreval("");
 	escreval("-----------------------------------------------------------");
 	escreval("                          Resumo                           ");
 	escreval("-----------------------------------------------------------");
