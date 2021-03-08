@@ -1,0 +1,25 @@
+algoritmo Ex6_IP;
+// Síntese
+//  Objetivo:  Descobrir se um número é par ou ímpar
+//  Entrada :  Numero
+//  Saída   :  Par ou ímpar
+
+
+principal
+	// Declarações
+	inteiro Numero;
+	// Instrções
+	escreval("-----------------------------------------------------------");
+	escreval("          Descobrirei se um número é par ou ímpar!         ");
+	escreval("-----------------------------------------------------------");
+	
+	escreva("> Me diga um número qualquer: ");
+	leia(Numero);
+	escreval("-----------------------------------------------------------");
+	se (Numero%2 > 0) entao
+		escreval("> O número: ",Numero," é impar!");
+	senao
+		escreval("> O número: ",Numero," é par!");
+	fimSe
+	escreva("-----------------------------------------------------------");
+fimPrincipal

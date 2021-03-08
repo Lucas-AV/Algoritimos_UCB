@@ -1,0 +1,47 @@
+algoritmo Ex12_DDD;
+// Síntese
+//  Objetivo:  Identificar o Estado do DDD fornecido pelo usuário com base em uma tabela
+//  Entrada :  DDD
+//  Saída   :  ESTADO
+
+
+principal
+	// Declarações
+	inteiro DDD;
+	texto ESTADO;
+	// Instruções
+	escreval("-----------------------------------------------------------");
+	escreval("             Central De DDD CALANGO DO CERRADO!            ");
+	escreval("-----------------------------------------------------------");
+	
+	escreva("> Me informe seu DDD: ");
+	leia(DDD);
+	ESTADO = "Uma cidade no Brasil sem identificação";
+	escreval("-----------------------------------------------------------");
+	se (DDD == 61) entao
+		ESTADO = "Brasília";
+	fimSe
+	se (DDD == 71) entao
+		ESTADO = "Salvador";
+	fimSe
+	se (DDD == 11) entao
+		ESTADO = "São Paulo";
+	fimSe
+	se (DDD == 21) entao
+		ESTADO = "Rio de Janeiro";
+	fimSe
+	se (DDD == 32) entao
+		ESTADO = "Juiz de Fora";
+	fimSe
+	se (DDD == 19) entao
+		ESTADO = "Campinas";
+	fimSe
+	se (DDD == 27) entao
+		ESTADO = "Vitória";
+	fimSe
+	se (DDD == 31) entao
+		ESTADO = "Belo Horizonte";
+	fimSe
+	escreval("> Seu DDD é de: ", ESTADO);
+	escreva("-----------------------------------------------------------");
+fimPrincipal

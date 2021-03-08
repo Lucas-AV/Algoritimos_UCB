@@ -1,0 +1,36 @@
+algoritmo Ex14_M;
+// Síntese
+//  Objetivo:  Ler 2 números e apresentar a diferença entre eles
+//  Entrada :  N1, N2
+//  Saída   :  Diferenca
+
+
+principal
+	// Declarações
+	inteiro N1, N2, N3;
+	// Instruções
+	escreval("-----------------------------------------------------------");
+	escreval("                 Te direi o maior de 3 números!            ");
+	escreval("-----------------------------------------------------------");
+	
+	escreva("> Me informe o valor do primeiro número: ");
+	leia(N1);
+	
+	escreva("> Me informe o valor do segundo número: ");
+	leia(N2);
+	
+	escreva("> Me informe o valor do terceiro número: ");
+	leia(N3);
+	
+	escreval("-----------------------------------------------------------");
+	se (N1 > N2 e N1 > N3) entao
+		escreval(" O número: ",N1," é o maior de todos");
+	fimSe
+	se (N2 > N3 e N2 > N1) entao
+		escreval(" O número: ",N2," é o maior de todos");
+	fimSe
+	se (N3 > N1 e N3 > N2) entao
+		escreval("O número: ",N3," é o maior de todos");
+	fimSe
+	escreva("-----------------------------------------------------------");
+fimPrincipal

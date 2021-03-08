@@ -1,0 +1,39 @@
+algoritmo Ex4_Trat_Ex8;
+// Síntese
+//  Objetivo:  Apresentar o nome do usuário como Sr. ou Sra. de acordo com o Sexo dele
+//  Entrada :  Nome, Sexo
+//  Saída   :  Tratamento
+
+
+principal
+	// Declarações
+	real Peso, Altura;
+	texto Nome, Tratamento;
+	inteiro Sexo;
+	// Instruções
+	escreval("-----------------------------------------------------------");
+	escreval("                       Bem Vindo!                          ");
+	escreval("-----------------------------------------------------------");
+	
+	escreva("> Me diga o seu nome: ");
+	leia(Nome);
+
+	escreva("> Me informe sua altura: ");
+	leia(Altura);
+	escreva("> Informe o código seu sexo (0 = M e 1 = F): ");
+	leia(Sexo);
+
+	se (Sexo < 1) entao
+		Tratamento = "Ilmo Sr.";
+		Peso = (72.5*Altura) - 58;
+	senao
+		Tratamento = "Ilma Sra.";
+		Peso = (62.1*Altura) - 44.7;
+	fimSe
+
+	escreval("-----------------------------------------------------------");
+	escreval("> Olá, ",Tratamento," ",Nome);
+	escreval("> Seu peso ideal deve ser: ", Peso," KG");
+	escreva("------------------------------------------------------------");
+	
+fimPrincipal

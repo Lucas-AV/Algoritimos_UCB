@@ -1,0 +1,30 @@
+algoritmo Ex15_Prov;
+// Síntese
+//  Objetivo:  Calcular o valor a ser pago a uma provedora de internet com base na quantidade de horas utilizadas pelo usuário
+//  Entrada :  HorasGastas // InfoExtra: Taxa até 20HorasGastas = R$ 30,00. (+10% por HorasGastas excendentes)
+//  Saída   :  Valor
+
+
+principal
+	// Declarações
+	inteiro HorasGastas;
+	real Valor, Taxa;
+	// Instruções
+	Taxa = 30.00;
+	escreval("-----------------------------------------------------------");
+	escreval("     Bem vindo a sua provedora de internet CALANGO-UCB!    ");
+	escreval("-----------------------------------------------------------");
+
+	escreva("> Me informe quantas horas de internet você usou: ");
+	leia(HorasGastas);
+	
+	escreval("-----------------------------------------------------------");
+	se (HorasGastas > 20) entao
+		Valor = Taxa + ((HorasGastas - 20) * 3.00);
+		escreval("> Você deve pagar: R$", Valor);
+	senao
+		Valor = Taxa;
+		escreval("> Você deve pagar: R$",Valor);
+	fimSe
+	escreva("-----------------------------------------------------------");
+fimPrincipal
