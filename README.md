@@ -3,4 +3,4 @@ Repositório referente aos meus códigos feitos enquanto estou cursando Engenhar
 
 A maioria dos códigos aqui serão feitos em Portugol e C por enquanto.
 
-Em algum momento irei disponibilizar os mesmos códigos em python também.
+Em algum momento irei disponibilizar um resumo dos mesmos códigos em python também.
