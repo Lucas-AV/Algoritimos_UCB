@@ -4,16 +4,16 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-// Identifica se o sistema operacional È Linux ou Windows
-#ifdef _WIN32 // Por padr„o verifica se o sistema operacional È Windows
-#include <Windows.h> // Inclui a funÁ„o "sleep" e mais algumas outras
-#else // Caso o sistema n„o seja Windows automaticamente o include vira unistd.h (library para linux)
+// Identifica se o sistema operacional √© Linux ou Windows
+#ifdef _WIN32 // Por padr√£o verifica se o sistema operacional √© Windows
+#include <Windows.h> // Inclui a fun√ß√£o "sleep" e mais algumas outras
+#else // Caso o sistema n√£o seja Windows automaticamente o include vira unistd.h (library para linux)
 #include <unistd.h>
 #endif // Finaliza o if
 void verifySpaces(char Arg[100], int lenght){
     for (int i = 0; i < lenght; i++){
         if (isspace(Arg[i])){
-            printf("ERROR: EspaÁos detectados!");
+            printf("ERROR: Espa√ßos detectados!");
             system("PAUSE");
             break;
         }
@@ -22,7 +22,7 @@ void verifySpaces(char Arg[100], int lenght){
 
 void viewMainMenu(char *decorador, char *nome){
     system("cls");    
-    char *menu[6]; // J· que n„o existe map no C base estou utilizando um jeito similar a um map<int,string> | Chave, Valor
+    char *menu[6]; // J√° que n√£o existe map no C base estou utilizando um jeito similar a um map<int,string> | Chave, Valor
     menu[0] = "Cardapio";
     menu[1] = "Login";
     menu[2] = "Descontos";
@@ -54,7 +54,7 @@ void viewAdminMenu(char *decorador){
     char *AdmMenu[5];
     printf("%s\n  Logado como Administrador\n%s\n",decorador,decorador);
     AdmMenu[0] = "Consultar Lojas";
-    AdmMenu[1] = "Receita do mÍs";
+    AdmMenu[1] = "Receita do m√™s";
     AdmMenu[2] = "Pedidos do dia";
     AdmMenu[3] = "Sair";
     for (int i = 0; i < 4; i++){
@@ -110,7 +110,7 @@ void viewTamanhosPizza(char *decorador, float preco[3], char *nomes[3], char *sa
 }
 
 void Animation(){
-    // AnimaÁ„o de carregamento! (200 ms)
+    // Anima√ß√£o de carregamento! (200 ms)
     for (int i = 1; i < 17; i++){
         if (i % 4 == 0){
             printf("\b\b\b\b");
@@ -135,8 +135,8 @@ int main(){
     system("chcp 65001");
     setlocale(LC_ALL, "Portuguese");
     
-    // DeclaraÁıes
-    int option = 100; // NavegaÁ„o
+    // Declara√ß√µes
+    int option = 100; // Navega√ß√£o
     char linha[30] = "============================="; // decorador!
     char *nome = "Pizzaria Online"; // nome da loja
 
@@ -144,7 +144,7 @@ int main(){
     char AdmUser[100] = "adm@gmail.com";
     char admSenha[100] = "adm123";
     
-    // Struct criado para armazenar a localizaÁ„o das lojas (Pode ser substituido por chars com ponteiros porÈm desse modo È muito melhor de fazer)
+    // Struct criado para armazenar a localiza√ß√£o das lojas (Pode ser substituido por chars com ponteiros por√©m desse modo √© muito melhor de fazer)
     struct Locais{
         char *Cidades[3], *Enderecos[3];
         int Salas[3], Empregados[3];
@@ -154,7 +154,7 @@ int main(){
     lojas.Renda[0] = 21000;
     lojas.Gastos[0] = 10500;
     lojas.Lucros[0] = lojas.Renda[0] - lojas.Gastos[0];
-    lojas.Cidades[0] = "¡guas Claras Norte";
+    lojas.Cidades[0] = "√Åguas Claras Norte";
     lojas.Enderecos[0] = "Rua 10 Lote 3";
     lojas.Salas[0] = 5;
     lojas.Empregados[0] = 16;
@@ -179,16 +179,16 @@ int main(){
     char *dias[7] = {
         "Domingo",
         "Segunda-feira",
-        "TerÁa-feira",
+        "Ter√ßa-feira",
         "Quarta-feira",
         "Quinta-feira",
         "Sexta-feira",
-        "S·bado-feira",
+        "S√°bado",
     };
     char *promos[7] = {
         "Desconto de 15%% em pedidos com 3 ou mais pizzas",
         "Pizzas Pequenas com 10%% de desconto",
-        "Pizzas MÈdias com 10%% de desconto",
+        "Pizzas M√©dias com 10%% de desconto",
         "Pizzas Grandes com 10%% de desconto",
         "Pizzas Salgadas com 10%% de desconto",
         "Pizzas Doces com 10%% de desconto",
@@ -202,46 +202,46 @@ int main(){
 
     // sal
     pizzas[0] = "Pizza de Calabresa com bacon";
-    infoPizzas[0] = "> Calabresa\n> Bacon\n> MuÁarela\n> OrÈgano";
+    infoPizzas[0] = "> Calabresa\n> Bacon\n> Mu√ßarela\n> Or√©gano";
     
     pizzas[1] = "Pizza de Portuguesa especial";
-    infoPizzas[1] = "> MuÁarela\n> Presunto\n> Palmito\n> Ervilha\n> Lombo canadense\n> Provolone\n> Ovo\n> Bacon";
+    infoPizzas[1] = "> Mu√ßarela\n> Presunto\n> Palmito\n> Ervilha\n> Lombo canadense\n> Provolone\n> Ovo\n> Bacon";
     
     pizzas[2] = "Pizza de Frango com catupiry";
-    infoPizzas[2] = "> Peito de frango\n> OrÈgano\n> Queijo catupiry";
+    infoPizzas[2] = "> Peito de frango\n> Or√©gano\n> Queijo catupiry";
     
     pizzas[3] = "Pizza de Marguerita";
-    infoPizzas[3] = "> MuÁarela\n> Manjeric„o\n> OrÈgano\n> Tomate\n> Azeitona";
+    infoPizzas[3] = "> Mu√ßarela\n> Manjeric√£o\n> Or√©gano\n> Tomate\n> Azeitona";
     
-    pizzas[4] = "Pizza de MuÁarela";
-    infoPizzas[4] = "> MuÁarela\n> OrÈgano";
+    pizzas[4] = "Pizza de Mu√ßarela";
+    infoPizzas[4] = "> Mu√ßarela\n> Or√©gano";
     
     pizzas[5] = "Pizza de Pepperoni";
-    infoPizzas[5] = "> Salame italiano\n> Piment„o\n> MuÁarela\n> Pimenta Calabresa\n> Molho especial";
+    infoPizzas[5] = "> Salame italiano\n> Piment√£o\n> Mu√ßarela\n> Pimenta Calabresa\n> Molho especial";
 
     pizzas[6] = "Pizza de 4 Queijos";
-    infoPizzas[6] = "> Parmes„o ralado\n> MuÁarela ralada\n> Provolone\n> Gorgonzola";
+    infoPizzas[6] = "> Parmes√£o ralado\n> Mu√ßarela ralada\n> Provolone\n> Gorgonzola";
 
     pizzas[7] = "Pizza Romana";
-    infoPizzas[7] = "> MuÁarela\n> Azeitona\n> Anchovas\n> Azeite\n> Tomate Seco";
+    infoPizzas[7] = "> Mu√ßarela\n> Azeitona\n> Anchovas\n> Azeite\n> Tomate Seco";
 
     // Doce Napolitana
     pizzas[8] = "Pizza de Banana com chocolate";
-    infoPizzas[8] = "> Leite condensado\n> MuÁarela\n> Chocolate\n> Banana";
+    infoPizzas[8] = "> Leite condensado\n> Mu√ßarela\n> Chocolate\n> Banana";
     
     pizzas[9] = "Pizza de Banana com canela";
-    infoPizzas[9] = "> AÁucar com canela\n> MuÁarela\n> Banana";
+    infoPizzas[9] = "> A√ßucar com canela\n> Mu√ßarela\n> Banana";
     
     pizzas[10] = "Pizza de Romeu e Julieta";
-    infoPizzas[10] = "> MuÁarela\n> Goiabada\n> Canela";
+    infoPizzas[10] = "> Mu√ßarela\n> Goiabada\n> Canela";
     
     pizzas[11] = "Pizza de Frutas vermelhas";
     infoPizzas[11] = "> Framboesa fatiada\n> Morgango fatiado\n> Cereja fatiada\n> Chocolate";
 
     pizzas[12] = "Pizza de California";
-    infoPizzas[12] = "> PÍssego em calda fatiado\n> Abacaxi em calda fatiado\n> Figo em calda fatiado\n> MuÁarela\n> Lombinho";
+    infoPizzas[12] = "> P√™ssego em calda fatiado\n> Abacaxi em calda fatiado\n> Figo em calda fatiado\n> Mu√ßarela\n> Lombinho";
     
-    // Struct para salvar informaÁıes referentes ao usuario
+    // Struct para salvar informa√ß√µes referentes ao usuario
     struct User{
         char *Pizzas[100], *Tamanhos[100];
         char usuario[100], senha[100];
@@ -261,22 +261,22 @@ int main(){
     do{
         system("cls");
         struct User user_atual;
-        user_atual.Contador = 0; // Contador de pizzas pedidas atÈ o momento
+        user_atual.Contador = 0; // Contador de pizzas pedidas at√© o momento
         user_atual.total = 0; // Total do pedido
         user_atual.logado = false; // Bool de controle
-        viewMainMenu(linha,nome); // FunÁ„o de menu
-        scanf("%i",&option); // Scanf de informaÁ„o
-        fflush(stdin); // Limpa a mÈmoria tempor·ria (Evita alguns bugs relacionados ao scanf)
+        viewMainMenu(linha,nome); // Fun√ß√£o de menu
+        scanf("%i",&option); // Scanf de informa√ß√£o
+        fflush(stdin); // Limpa a m√©moria tempor√°ria (Evita alguns bugs relacionados ao scanf)
 
         if (option == 1){ // Comando condicional que se relaciona com o valor option
-            // Loop para mostar informaÁıes das Pizzas
-            option = 100; // Define o valor de option para 100 por padr„o para evitar bugs relacionados ao scanf
+            // Loop para mostar informa√ß√µes das Pizzas
+            option = 100; // Define o valor de option para 100 por padr√£o para evitar bugs relacionados ao scanf
             do{
-                viewPizzas(linha,pizzas); // FunÁ„o para evitar ficar escrevendo
+                viewPizzas(linha,pizzas); // Fun√ß√£o para evitar ficar escrevendo
                 printf("Escolha uma pizza! (Para voltar digite: 0)");
                 printf("\n> ");
                 scanf("%i",&option);
-                fflush(stdin); // Evita alguns erros bem desagrad·veis relacionados ao stdin e qualquer input feito pelo usu·rio.
+                fflush(stdin); // Evita alguns erros bem desagrad√°veis relacionados ao stdin e qualquer input feito pelo usu√°rio.
                 
                 if (option <= 13 && option > 0){
                     system("cls");
@@ -301,7 +301,7 @@ int main(){
                 scanf("%s",&user_atual.senha);
                 fflush(stdin);
                 
-                // Cria v·riaveis para comparar usuario e senha com o usuario e senha do administrador
+                // Cria v√°riaveis para comparar usuario e senha com o usuario e senha do administrador
                 int cpmUser = strcmp(user_atual.usuario, AdmUser); // strcmp compara as strings e retorna 0 se forem iguais (-1,1) se forem diferentes
                 int cmpSenha = strcmp(user_atual.senha, admSenha);
                 
@@ -316,7 +316,7 @@ int main(){
                         system("cls");
                         switch (option) {
                             case 1:
-                                printf("%s\n    InformaÁ„o das lojas\n%s\n",linha,linha);
+                                printf("%s\n    Informa√ß√£o das lojas\n%s\n",linha,linha);
                                 for (int i = 0; i < 3; i++){
                                     printf("> %s\n",lojas.Cidades[i]);
                                     printf("Endereco: %s\n",lojas.Enderecos[i]);
@@ -328,7 +328,7 @@ int main(){
                                 break;
 
                             case 2:
-                                printf("%s\n       Receita do mÍs\n%s\n",linha,linha);
+                                printf("%s\n       Receita do m√™s\n%s\n",linha,linha);
                                 for (int i = 0; i < 3; i++){
                                     float LucroPorcentagem = (lojas.Lucros[i]/lojas.Renda[i])*100, GastoPorcentagem = 100.00-LucroPorcentagem;
                                     printf("> %s\n",lojas.Cidades[i]);
@@ -396,7 +396,7 @@ int main(){
                                     printf("- Digite 0 ou alguma letra para finalizar o pedido!\n> ");
                                     scanf("%i",&option);
                                     fflush(stdin);
-                                    // Verifica se o valor de input de option (Utilizado para navegaÁ„o entre menus est· entre os valores 1 e 13)
+                                    // Verifica se o valor de input de option (Utilizado para navega√ß√£o entre menus est√° entre os valores 1 e 13)
                                     if(option <= 13 && option > 0){
                                         system("cls");
                                         printf("%s\n%s\n%s\n",linha,pizzas[(option-1)],linha);
@@ -417,7 +417,7 @@ int main(){
                                         int quantidade = 0;
                                         do{
                                             viewTamanhosPizza(linha,precos,tamanhos,pizzas[(option-1)]);
-                                            printf("Quantas pizzas %s (%s) ser„o pedidas?\n> ",pizzas[(option-1)],tamanhos[select-1]);
+                                            printf("Quantas pizzas %s (%s) ser√£o pedidas?\n> ",pizzas[(option-1)],tamanhos[select-1]);
                                             scanf("%i",&quantidade);
                                             fflush(stdin);
                                             printf("%s\n",linha);
@@ -440,7 +440,7 @@ int main(){
                             
                             else if(option == 2){
                                 
-                                printf("%s\nRevis„o do pedido\n%s\n",linha,linha);
+                                printf("%s\nRevis√£o do pedido\n%s\n",linha,linha);
                                 for(int i = 0; i < user_atual.Contador; i++){
                                     printf("> %s (%i %s)\n", user_atual.Pizzas[i],user_atual.quantidade[i],user_atual.Tamanhos[i]);
                                 }
@@ -450,7 +450,7 @@ int main(){
                             
                             else if(option == 3){
                                 
-                                printf("%s\n- LocalizaÁ„o das pizzarias -\n%s\n",linha,linha);
+                                printf("%s\n- Localiza√ß√£o das pizzarias -\n%s\n",linha,linha);
                                 for(int i = 0; i < 3; i++){
                                     printf("> %s: %s\n",lojas.Cidades[i],lojas.Enderecos[i]);
                                 }
@@ -473,7 +473,7 @@ int main(){
         }
         
         else if (option == 3){
-            //viewDescontos(linha);
+            viewDescontos(linha,dias,promos);
             system("PAUSE");
         }
 
