@@ -98,6 +98,7 @@ void viewContatos(char *decorador){
 void viewSobre(char *decorador){
     system("cls");
     printf("%s\n            Sobre\n%s\n",decorador,decorador);
+    printf("Somos uma pizzaria com mais de 15 anos no mercado sempre buscando melhorar e inovar de todas as formas.\n%s\n",decorador);
 }
 
 void viewTamanhosPizza(char *decorador, float preco[3], char *nomes[3], char *sabor){
@@ -186,13 +187,13 @@ int main(){
         "Sábado",
     };
     char *promos[7] = {
-        "Desconto de 15%% em pedidos com 3 ou mais pizzas",
-        "Pizzas Pequenas com 10%% de desconto",
-        "Pizzas Médias com 10%% de desconto",
-        "Pizzas Grandes com 10%% de desconto",
-        "Pizzas Salgadas com 10%% de desconto",
-        "Pizzas Doces com 10%% de desconto",
-        "Desconto de 20%% em pedidos com 5 ou mais pizzas",
+        "Desconto de 15% em pedidos com 3 ou mais pizzas",
+        "Pizzas Pequenas com 10% de desconto",
+        "Pizzas Médias com 10% de desconto",
+        "Pizzas Grandes com 10% de desconto",
+        "Pizzas Salgadas com 10% de desconto",
+        "Pizzas Doces com 10% de desconto",
+        "Desconto de 20% em pedidos com 5 ou mais pizzas",
     };
 
     // Pizzas
