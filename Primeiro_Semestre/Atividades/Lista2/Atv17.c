@@ -8,7 +8,7 @@
 int main(){
 	// Comandos para configurar o idioma do terminal
 	system("chcp 65001");
-    setlocale(LC_ALL, "Portuguese");
+    	setlocale(LC_ALL, "Portuguese");
 	system("cls");
 
 	// Vars
@@ -17,10 +17,11 @@ int main(){
 	char spaces = 256;
 	// Vars Code
 	char nome[100];
-	int dias = 0, Bissextos = 0;
+	int dias = 0, Bissextos;
 	int AnoAtual, AnoNasc;
 	// Code
 	do{
+		Bissextos = 0;
 		printf("%s\n%2.c%s\n%s\n",linha,spaces,title,linha);
 		printf("Qual seu nome?\n> ");
 		gets(nome);
