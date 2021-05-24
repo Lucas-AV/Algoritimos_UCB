@@ -8,11 +8,11 @@
 int main(){
 	// Comandos para configurar o idioma do terminal
 	system("chcp 65001");
-    setlocale(LC_ALL, "Portuguese");
+    	setlocale(LC_ALL, "Portuguese");
 	system("cls");
 
 	// Vars
-	char *title = "Menor de 3 números";
+	char *title = "Menor altura 3 pessoas";
 	char linha[30] = "=============================";
 	char spaces = 256;
 	// Vars Code
