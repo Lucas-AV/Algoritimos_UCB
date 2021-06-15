@@ -1,5 +1,3 @@
-// Nomecompleto: Lucas Alves Vilela Matrícula: UC21105257 Curso: Engenharia de Software
-// Versão SEM STRUCT do programa! (Mexi um pouquinho nele durante o período que estive com COVID) espero que tenha ficado legal :)
 // Lucas Alves Vilela (Github: LucasV75)
 #include <stdbool.h> // Adiciona o tipo de váriavel bool ao C
 #include <stdlib.h> // Padrão do C
