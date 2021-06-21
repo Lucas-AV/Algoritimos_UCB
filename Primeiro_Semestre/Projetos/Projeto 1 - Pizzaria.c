@@ -1,12 +1,13 @@
 // github: LucasV75
 /*
 Feito:
-1. correção de pequenos bugs
-2. Adição de sistema para checagem de repetição de contas
-3. Criada conta de funcionário
-4. Processo de criação de conta melhorado
-Pendentes:
-1. Sistema de funcionário
+1. Imports Corrigidos
+2. Sistema de funcionário
+3. Correção de pequenos bugs
+Pendente:
+1. Informação de funcionário (Geral similar a cliente)
+2. Salário do funcionário
+3. Validação para não aceitar usuário começando com espaço vazio!
 */
 #include <stdio.h>   // Inputs e outputs em C
 #include <stdlib.h>  // Padrão do C
@@ -14,6 +15,8 @@ Pendentes:
 #include <ctype.h>   // Serve para verificar os tipos de variáveis
 #include <stdbool.h> // Adiciona o tipo de variável bool ao C
 #include <Windows.h> // Inclui a função "sleep" e mais algumas outras
+#include <conio.h>   // Responsável pelo getch();
+#include <time.h>    // Serve para usar funções relacionadas a tempo
 // Cores
 #define GRN "\e[1;32m"
 #define RED "\e[1;31m"
@@ -167,8 +170,8 @@ void viewLojas(struct Locais Lojas, char *line, int digit){
         printf("%s\n",Lojas.Cidades[i]);
         printf("%s\n",Lojas.Enderecos[i]);
         printf("Receita: R$ %.2f\n",Lojas.Renda[i]);
-        printf("Lucro: R$ %.2f\n",Lojas.Lucros[i]);
-        printf("Gasto: R$ %.2f\n",Lojas.Gastos[i]);
+        printf("Lucro:   R$ %.2f\n",Lojas.Lucros[i]);
+        printf("Gasto:   R$ %.2f\n",Lojas.Gastos[i]);
         printf("Empregados: %i\n",Lojas.Empregados[i]);
         if(Lojas.Lucros[i] > Lojas.Gastos[i]){
             printf(GRN"Lucro!"RST" (R$ %.2f)",Lojas.Lucros[i] - Lojas.Gastos[i]);
@@ -192,6 +195,54 @@ void viewMenu(struct Menu menu, char *line, int digit){
     }
     printf("%s\n",line);
     printf("> ");
+}
+
+void viewEnderecos(char enderecos[100][2][100], char users[100][4][100], int cUsers,char *line, int digit){
+    system("cls");
+    strcenter(line,"- Lista de endereços dos clientes -",digit,false);
+    if(cUsers > 2){
+        for(int i = 2; i < cUsers; i++){
+            printf("> Cliente:  %s\n",users[i][0]);
+            printf("> Cidade:   %s\n",enderecos[i][0]);
+            printf("> Endereço: %s\n",enderecos[i][1]);
+            if(i < (cUsers-1)){
+                printf("\n");
+            }
+        }
+    } else {
+        printf("> Sem clientes cadastrados\n");
+        printf("> Sem endereços cadastrados\n");
+    }
+    
+    printf("%s\n",line);
+    system("pause");
+}
+
+void viewPedidos(struct Login logins, char *line){
+    strcenter(line,"- Pedidos do dia -",32,false);
+    if(logins.numSessoes > 0){
+        for(int i = 0; i < logins.numSessoes; i++){
+            if(logins.sessoes[i].total > 0){
+                printf("Cliente: %s\n",logins.sessoes[i].usuario);
+                for (int C = 0; C < logins.sessoes[i].Contador; C++){
+                    printf("> %s (%i %s)\n",logins.sessoes[i].Pizzas[C],logins.sessoes[i].quantidade[C],logins.sessoes[i].Tamanhos[C]);
+                }
+                if(logins.sessoes[i].endereco[0] > 0 && logins.sessoes[i].endereco[1] > 0 && strcmp(logins.sessoes[i].retirada,"Endereço do cliente") == 0){
+                    printf("Endereço: %s\n",logins.sessoes[i].endereco[1]);
+                    printf("Cidade:   %s\n",logins.sessoes[i].endereco[0]);
+                }
+                else {
+                    printf("Retirada: %s\n",logins.sessoes[i].retirada);
+                }
+                printf("Total:    R$ %.2f\n",logins.sessoes[i].total);
+                printf("%s\n",line);
+            }
+        }
+    } 
+    else {
+        printf("Nenhum pedido ainda!\n%s\n",line);
+    }
+    system("PAUSE");
 }
 
 int main(){
@@ -449,6 +500,13 @@ int main(){
     AccMenu.Items[5] = "Voltar";
     AccMenu.Tamanho = 6;
 
+    struct Menu FuncMenu;
+    FuncMenu.Items[0] = "Resumo da rede pizzaria";
+    FuncMenu.Items[1] = "Endereço dos clientes";
+    FuncMenu.Items[2] = "Pedidos da pizzaria";
+    FuncMenu.Items[3] = "Informações";
+    FuncMenu.Items[4] = "Sair";
+    FuncMenu.Tamanho = 5;
     // Code
     do{
         // Init struct User ("Usuario atual >>> Muda toda vez q o loop recomeça!")
@@ -504,7 +562,7 @@ int main(){
                 if(cmpQuit == 0){
                     break;
                 }
-                printf("> Senha: ");
+                printf("> Senha:   ");
                 scanf("%s",&user_atual.senha);
                 fflush(stdin);
                 int cmpSenha = strcmp(user_atual.senha, admSenha);
@@ -516,13 +574,9 @@ int main(){
                     if(strcmp(user_atual.usuario,PassUsers[i][2]) == 0){
                         contaReal = true;
                         strcpy(user_atual.nome,PassUsers[i][0]);
-                        fflush(stdin);
                         strcpy(user_atual.telefone,PassUsers[i][1]);
-                        fflush(stdin);
                         strcpy(user_atual.endereco[0],Enderecos[i][0]);
-                        fflush(stdin);
                         strcpy(user_atual.endereco[1],Enderecos[i][1]);
-                        fflush(stdin);
                         user_atual.ID = i;
                     }
                     if(strcmp(user_atual.usuario,PassUsers[i][2]) == 0 && strcmp(user_atual.senha,PassUsers[i][3]) != 0){
@@ -534,7 +588,7 @@ int main(){
                 }
 
                 // Verificação de existência de USER
-                if(contaReal == false && cpmUser != 0 && cmpSenha != 0){
+                if(contaReal == false && cpmUser != 0 && cmpSenha != 0 && strcmp(user_atual.usuario,FuncUser) != 0 && strcmp(user_atual.senha,FuncSenha) != 0){
                     strcenter(line,RED"- Essa conta não existe! -"RST,32,true);
                     char SN;    // Sim e Não
                     printf("Deseja criar uma conta?\n> ");
@@ -602,6 +656,11 @@ int main(){
                                 strcenter(line,RED"- ERROR: USUÁRIO INDISPONÍVEL! -"RST,32,true);
                                 Sleep(800);
                             }
+                            else if(strcmp(PassUsers[cPassUsers][2]," ") == 0 || strlen(PassUsers[cPassUsers][2]) == 0){
+                                contaUnica = false;
+                                strcenter(line,RED"- ERROR: USUÁRIO INVÁLIDO! -"RST,32,true);
+                                Sleep(800);
+                            }
                             else{
                                 contaUnica = true;
                                 break;
@@ -614,7 +673,7 @@ int main(){
                             printf("> Seu nome:     %s\n",PassUsers[cPassUsers][0]);
                             printf("> Telefone:     %s\n",PassUsers[cPassUsers][1]);
                             printf("> Usuário:      %s\n",PassUsers[cPassUsers][2]);
-                            printf("> Senha: ");
+                            printf("> Senha:        ");
                             gets(PassUsers[cPassUsers][3]);
                             fflush(stdin);
                         } while (strlen(PassUsers[cPassUsers][3]) == 0 || strcmp(PassUsers[cPassUsers][3]," ") == 0);
@@ -627,7 +686,7 @@ int main(){
                             printf("> Telefone:     %s\n",PassUsers[cPassUsers][1]);
                             printf("> Usuário:      %s\n",PassUsers[cPassUsers][2]);
                             printf("> Senha:        %s\n",PassUsers[cPassUsers][3]);
-                            printf("> Sua cidade: ");
+                            printf("> Sua cidade:   ");
                             gets(Enderecos[cPassUsers][0]);
                             fflush(stdin);
                         } while (strlen(Enderecos[cPassUsers][0]) == 0 || strcmp(Enderecos[cPassUsers][0]," ") == 0);
@@ -676,33 +735,11 @@ int main(){
                                 break;
 
                             case 2:
-                                viewLojas(lojas,line2,32);
+                                viewLojas(lojas,line,32);
                                 break;
 
                             case 3:
-                                strcenter(line,"Pedidos do dia!",32,false);
-                                if(logins.numSessoes > 0){
-                                    for(int i = 0; i < logins.numSessoes; i++){
-                                        if(logins.sessoes[i].total > 0){
-                                            printf("Cliente: %s\n",logins.sessoes[i].usuario);
-                                            for (int C = 0; C < logins.sessoes[i].Contador; C++){
-                                                printf("> %s (%i %s)\n",logins.sessoes[i].Pizzas[C],logins.sessoes[i].quantidade[C],logins.sessoes[i].Tamanhos[C]);
-                                            }
-                                            printf("Total: R$ %.2f\n",logins.sessoes[i].total);
-                                            if(logins.sessoes[i].endereco[1] > 0 && logins.sessoes[i].endereco[0] > 0 && strcmp(logins.sessoes[i].retirada,"Endereço do cliente") == 0){
-                                                printf("Endereço: %s\n",logins.sessoes[i].endereco[1]);
-                                                printf("Cidade:   %s\n",logins.sessoes[i].endereco[0]);
-                                            }
-                                            else {
-                                                printf("Retirada: %s\n",logins.sessoes[i].retirada);
-                                            }
-                                            printf("%s\n",line);
-                                        }
-                                    }
-                                } else {
-                                    printf("Nenhum pedido ainda!\n%s\n",line);
-                                }
-                                system("PAUSE");
+                                viewPedidos(logins,line);
                                 break;
 
                             case 4:
@@ -1130,6 +1167,40 @@ int main(){
                     logins.numSessoes++;
                 }
 
+                // FUNC
+                else if(strcmp(user_atual.usuario,FuncUser) == 0 && strcmp(user_atual.senha,FuncSenha) == 0){
+                    sprintf(FuncMenu.title,"- Bem vindo %s -",FuncNome);
+                    free(FuncMenu.title);
+                    int funcNav;
+                    do{
+                        viewMenu(FuncMenu,line,32);
+                        funcNav = getch();
+                        if(funcNav >= 48 && funcNav <= 57){ // 0 a 9 são respectivamente as teclas de número 48 a 57 do teclado
+                            funcNav = funcNav%48;
+                        }
+                        printf("%i\n",funcNav);
+                        Sleep(20);
+                        system("cls");
+                        if(funcNav == 1){
+                            viewLojas(lojas,line,32);
+                        }
+                        else if(funcNav == 2){
+                            viewEnderecos(Enderecos,PassUsers,cPassUsers,line,32);
+                        }
+                        else if(funcNav == 3){
+                            viewPedidos(logins,line);
+                        }
+                        else if(funcNav == 4){
+                            strcenter(line,"- Informações da conta -",32,false);
+                            printf("COMMING SOON. . .\n%s\n",line);
+                            system("pause");
+                        }
+                        else if(funcNav == 5){
+                            user_atual.logado = true;
+                            break;
+                        }
+                    } while(funcNav != 27 && funcNav != 5);
+                }
             } while(user_atual.logado != true);
         }
         
@@ -1141,8 +1212,8 @@ int main(){
             viewSobre(line);
         }
 
-        else if (option == 5 || option == 27){
-            printf("Saindo do sistema\n%s\n",line);
+        else if (option == 5){
+            printf("Saindo do sistema...\n%s\n",line);
             break;
         }
     } while(option != 5 && option != 27);
