@@ -1,13 +1,10 @@
 // github: LucasV75
 /*
 Feito:
-1. Imports Corrigidos
-2. Sistema de funcionário
-3. Correção de pequenos bugs
+1. Validação de caracteres
 Pendente:
 1. Informação de funcionário (Geral similar a cliente)
 2. Salário do funcionário
-3. Validação para não aceitar usuário começando com espaço vazio!
 */
 #include <stdio.h>   // Inputs e outputs em C
 #include <stdlib.h>  // Padrão do C
@@ -45,6 +42,19 @@ void strcenter(char *line, char *string, char digit, bool color){
         printf("%c",digit); // Printa o digito no lado direito
     }
     printf("\n%s\n",line); // Printa a linha final
+}
+
+// Método de validação de informação por meio de verificação de caracteres
+int ValInfo(char Alvo, char *Lista){
+    int Count = 0;
+    for(int i = 0; i < strlen(Lista); i++){
+        //printf("%i: %c && %c\n",i,Alvo,Lista[i]); // DEBUG
+        if(Alvo == Lista[i]){
+            Count++;
+        }
+    }
+    // Se Count for igual a 0, o char que está sendo verificado vai ser considerado inválido!
+    return Count;
 }
 
 // Animação de carregamento!
@@ -263,9 +273,10 @@ int main(){
     char *line2 = "====================================================================";
     char *nome = "Pizzaria: Code Pizza"; // nome da loja
 
-    // Controle
-    char nums[10] = {'0','1','2','3','4','5','6','7','8','9'};  // Lista de números de 0 a 9 (Vai ser útil para validação de dados como telefones e CPFs)
-    char Alpha[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'}; // Alfabeto
+    // Lista de caracteres disponíveis
+    char nums[10] = {'0','1','2','3','4','5','6','7','8','9'};
+    char Alpha[26] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
+    char AlphaNums[62] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'}; // Alfabeto
 
     // Admin
     char AdmNome[100] = "Admin";
@@ -597,13 +608,15 @@ int main(){
                     printf("%c\n",SN);
                     if(SN == 'S' || SN == 's'){
                         // Nome do cliente
+                        int ValChar;
                         do{
                             system("cls");
                             strcenter(line,"- CRIAÇÃO DE CONTA! -",32,false);
                             printf("> Seu nome: ");
                             gets(PassUsers[cPassUsers][0]);
                             fflush(stdin);
-                        } while (strlen(PassUsers[cPassUsers][0]) == 0 || strcmp(PassUsers[cPassUsers][0]," ") == 0);
+                            ValChar = ValInfo(PassUsers[cPassUsers][0][0],AlphaNums);
+                        } while (strlen(PassUsers[cPassUsers][0]) == 0 || ValChar == 0);
                        
                         // Número de telefone
                         bool valTelefone = false;
@@ -636,6 +649,8 @@ int main(){
                             }
                         } while (valTelefone != true);
                         
+                        // Usuário
+                        //int ValChar;
                         bool contaUnica = false; // Serve como verificador de contas repetidas
                         do{
                             int rpConta = 0; // Serve como um contador (Se for maior ou igual a 2, o sistema vai considerar a conta como repetida)
@@ -646,6 +661,7 @@ int main(){
                             printf("> Usuário:      ");
                             gets(PassUsers[cPassUsers][2]);
                             fflush(stdin);
+                            ValChar = ValInfo(PassUsers[cPassUsers][2][0],AlphaNums);
                             for(int i = 0; i < cPassUsers+1; i++){
                                 if(strcmp(PassUsers[cPassUsers][2],PassUsers[i][2]) == 0){
                                     rpConta++;
@@ -656,7 +672,7 @@ int main(){
                                 strcenter(line,RED"- ERROR: USUÁRIO INDISPONÍVEL! -"RST,32,true);
                                 Sleep(800);
                             }
-                            else if(strcmp(PassUsers[cPassUsers][2]," ") == 0 || strlen(PassUsers[cPassUsers][2]) == 0){
+                            else if(strcmp(PassUsers[cPassUsers][2]," ") == 0 || ValChar == 0){
                                 contaUnica = false;
                                 strcenter(line,RED"- ERROR: USUÁRIO INVÁLIDO! -"RST,32,true);
                                 Sleep(800);
@@ -676,7 +692,8 @@ int main(){
                             printf("> Senha:        ");
                             gets(PassUsers[cPassUsers][3]);
                             fflush(stdin);
-                        } while (strlen(PassUsers[cPassUsers][3]) == 0 || strcmp(PassUsers[cPassUsers][3]," ") == 0);
+                            ValChar = ValInfo(PassUsers[cPassUsers][3][0],AlphaNums);
+                        } while (strlen(PassUsers[cPassUsers][3]) == 0 || ValChar == 0);
                         
                         
                         do{
@@ -689,7 +706,8 @@ int main(){
                             printf("> Sua cidade:   ");
                             gets(Enderecos[cPassUsers][0]);
                             fflush(stdin);
-                        } while (strlen(Enderecos[cPassUsers][0]) == 0 || strcmp(Enderecos[cPassUsers][0]," ") == 0);
+                            ValChar = ValInfo(Enderecos[cPassUsers][0][0],AlphaNums);
+                        } while (strlen(Enderecos[cPassUsers][0]) == 0 || ValChar == 0);
                         do{
                             system("cls");
                             strcenter(line,"- CRIAÇÃO DE CONTA! -",32,false);
@@ -701,7 +719,8 @@ int main(){
                             printf("> Seu endereço: ");
                             gets(Enderecos[cPassUsers][1]);
                             fflush(stdin);
-                        } while (strlen(Enderecos[cPassUsers][1]) == 0 || strcmp(Enderecos[cPassUsers][1]," ") == 0);
+                            ValChar = ValInfo(Enderecos[cPassUsers][1][0],AlphaNums);
+                        } while (strlen(Enderecos[cPassUsers][1]) == 0 || ValChar == 0);
                         cPassUsers++;
                         strcenter(line,GRN"- CONTA CRIADA COM SUCESSO -"RST,32,true);
                         Sleep(600);
@@ -864,6 +883,7 @@ int main(){
                             }
 
                             else if(option == 4){
+                                int ValChar;
                                 strcenter(line,"- Cadastro de endereço -",32,false);
                                 printf("Sua cidade:   %s\n",user_atual.endereco[0]);
                                 printf("Seu endereço: %s\n",user_atual.endereco[1]);
@@ -879,19 +899,22 @@ int main(){
                                         strcenter(line,"- Cadastro de endereço -",32,false);
                                         printf("Digite sua cidade\n> ");
                                         gets(user_atual.endereco[0]);
-                                    } while (strlen(user_atual.endereco[0]) == 0 || strcmp(user_atual.endereco[0]," ") == 0);
+                                        ValChar = ValInfo(user_atual.endereco[0][0],AlphaNums);
+                                    } while (strlen(user_atual.endereco[0]) == 0 || ValChar == 0);
                                     do{
                                         system("cls");
                                         strcenter(line,"- Cadastro de endereço -",32,false);
                                         printf("Digite seu endereço\n> ");
                                         gets(user_atual.endereco[1]);
-                                    } while (strlen(user_atual.endereco[1]) == 0 || strcmp(user_atual.endereco[1]," ") == 0);
+                                        ValChar = ValInfo(user_atual.endereco[1][0],AlphaNums);
+                                    } while (strlen(user_atual.endereco[1]) == 0 || ValChar == 0);
                                 }
                                 printf("%s\n",line);
                                 system("PAUSE");
                             }
 
                             else if(option == 5){
+                                int ValChar;
                                 strcenter(line,"- Informações da sua conta -",32,false);
                                 printf("> Seu nome: %s\n",user_atual.nome);
                                 printf("> Endereço: %s (%s)\n",user_atual.endereco[1], user_atual.endereco[0]);
@@ -911,8 +934,8 @@ int main(){
                                         InfoOpt = getch();
                                         Sleep(20);
                                         printf("%c\n",InfoOpt);
-
                                         if(InfoOpt == '1'){
+                                            ValChar = 0;
                                             char newName[100];
                                             do{
                                                 system("cls");
@@ -920,7 +943,8 @@ int main(){
                                                 printf("> Nome Antigo: %s\n",user_atual.nome);
                                                 printf("> Nome novo: ");
                                                 gets(newName);
-                                                if(strlen(newName) > 0 && strcmp(newName," ") != 0){
+                                                ValChar = ValInfo(newName[0],AlphaNums);
+                                                if(strlen(newName) > 0 && ValChar != 0){
                                                     strcpy(user_atual.nome,newName);
                                                     fflush(stdin);
                                                     strcpy(PassUsers[user_atual.ID][0],newName);
@@ -937,10 +961,11 @@ int main(){
                                                     strcenter(line,RED"- ERROR: NOME INVÁLIDO -"RST,32,true);
                                                     Sleep(600);
                                                 }
-                                            } while (strlen(newName) == 0 || strcmp(newName," ") == 0);
+                                            } while (strlen(newName) == 0 || ValChar == 0);
                                         }
 
                                         else if(InfoOpt == '2'){
+                                            ValChar = 0;
                                             system("cls");
                                             strcenter(line,"- Cadastro de endereço -",32,false);
                                             printf("> Cidade antiga:   %s\n",user_atual.endereco[0]);
@@ -948,13 +973,14 @@ int main(){
                                             do{
                                                 printf("> Nova cidade: ");
                                                 gets(user_atual.endereco[0]);
-                                                if(strlen(user_atual.endereco[0]) == 0 || strcmp(user_atual.endereco[0]," ") == 0){
+                                                ValChar = ValInfo(user_atual.endereco[0][0],AlphaNums);
+                                                if(strlen(user_atual.endereco[0]) == 0 || ValChar == 0){
                                                     strcenter(line,RED"ERROR: CIDADE INVÁLIDA"RST,32,true);
                                                     Sleep(750);
                                                     system("cls");
                                                     strcenter(line,"- Cadastro de endereço -",32,false);
                                                 }
-                                            } while (strlen(user_atual.endereco[0]) == 0 || strcmp(user_atual.endereco[0]," ") == 0);
+                                            } while (strlen(user_atual.endereco[0]) == 0 || ValChar == 0);
                                             
                                             do{
                                                 system("cls");
@@ -962,11 +988,13 @@ int main(){
                                                 printf("> Nova Cidade: %s\n",user_atual.endereco[0]);
                                                 printf("> Novo endereço: ");
                                                 gets(user_atual.endereco[1]);
-                                                if(strlen(user_atual.endereco[1]) == 0 || strcmp(user_atual.endereco[1]," ") == 0){
+                                                
+                                                ValChar = ValInfo(user_atual.endereco[1][0],AlphaNums);
+                                                if(strlen(user_atual.endereco[1]) == 0 || ValChar == 0){
                                                     strcenter(line,RED"ERROR: CIDADE INVÁLIDA"RST,32,true);
                                                     Sleep(750);
                                                 }
-                                            } while (strlen(user_atual.endereco[1]) == 0 || strcmp(user_atual.endereco[1]," ") == 0);
+                                            } while (strlen(user_atual.endereco[1]) == 0 || ValChar == 0);
                                             strcpy(Enderecos[user_atual.ID][0],user_atual.endereco[0]);
                                             fflush(stdin);
                                             strcpy(Enderecos[user_atual.ID][1],user_atual.endereco[1]);
@@ -980,6 +1008,7 @@ int main(){
                                         }
 
                                         else if(InfoOpt == '3'){
+                                            ValChar = 0;
                                             bool valTelefone = false;
                                             char newPhone[100];
                                             do{
@@ -1024,6 +1053,7 @@ int main(){
                                         }
 
                                         else if(InfoOpt == '4'){
+                                            ValChar = 0;
                                             char newUser[100];
                                             do{
                                                 system("cls");
@@ -1031,7 +1061,8 @@ int main(){
                                                 printf("> Usuário Antigo: %s\n",user_atual.usuario);
                                                 printf("> Usuário novo:   ");
                                                 gets(newUser);
-                                                if(strlen(newUser) > 0 && strcmp(newUser," ") != 0){
+                                                ValChar = ValInfo(newUser[0],AlphaNums);
+                                                if(strlen(newUser) > 0 && ValChar != 0){
                                                     strcpy(user_atual.usuario,newUser);
                                                     fflush(stdin);
                                                     strcpy(PassUsers[user_atual.ID][2],newUser);
@@ -1048,7 +1079,7 @@ int main(){
                                                     strcenter(line,RED"- ERROR: Usuário INVÁLIDO -"RST,32,true);
                                                     Sleep(600);
                                                 }
-                                            } while (strlen(newUser) == 0 || strcmp(newUser," ") == 0);
+                                            } while (strlen(newUser) == 0 || ValChar == 0);
                                             system("cls");
                                             strcenter(line,"- Informações da sua conta -",32,false);
                                             printf("> Usuário novo: %s\n",user_atual.usuario);
@@ -1057,6 +1088,7 @@ int main(){
                                         }
                                         
                                         else if(InfoOpt == '5'){
+                                            ValChar = 0;
                                             char newPass[100];
                                             do{
                                                 system("cls");
@@ -1064,7 +1096,8 @@ int main(){
                                                 printf("> Senha Antiga: %s\n",user_atual.senha);
                                                 printf("> Senha nova:   ");
                                                 gets(newPass);
-                                                if(strlen(newPass) > 0 && strcmp(newPass," ") != 0){
+                                                ValChar = ValInfo(newPass[0],AlphaNums);
+                                                if(strlen(newPass) > 0 && ValChar != 0){
                                                     strcpy(user_atual.senha,newPass);
                                                     fflush(stdin);
                                                     strcpy(PassUsers[user_atual.ID][3],newPass);
@@ -1077,11 +1110,11 @@ int main(){
                                                     strcenter(line,"- Voltando para tela anterior -",32,false);
                                                     Sleep(600);
                                                 }
-                                                else{
+                                                else if(strlen(newPass) == 0 || ValChar == 0){
                                                     strcenter(line,RED"- ERROR: SENHA INVÁLIDO -"RST,32,true);
                                                     Sleep(600);
                                                 }
-                                            } while (strlen(newPass) == 0 || strcmp(newPass," ") == 0);
+                                            } while (strlen(newPass) == 0 || ValChar == 0);
                                             system("cls");
                                             strcenter(line,"- Informações da sua conta -",32,false);
                                             printf("> Senha nova: %s\n",user_atual.senha);
