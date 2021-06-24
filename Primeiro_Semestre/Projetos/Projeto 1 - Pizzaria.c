@@ -1,11 +1,4 @@
 // github: LucasV75
-/*
-Feito:
-1. Validação de caracteres
-Pendente:
-1. Informação de funcionário (Geral similar a cliente)
-2. Salário do funcionário
-*/
 #include <stdio.h>   // Inputs e outputs em C
 #include <stdlib.h>  // Padrão do C
 #include <locale.h>  // Configura o idioma do terminal
@@ -83,7 +76,7 @@ struct User{
     char *Pizzas[100], *Tamanhos[100];  // Informaçãos das pizzas pedidas pelo cliente
     char usuario[100], senha[100], nome[100], telefone[100], retirada[100]; // Informações do cliente
     char endereco[2][100];  // Endereço do cliente (Cidade + Endereço)
-    int *quantidade[100];   // Quantidade das pizzas do cliente por pedido
+    int quantidade[100];   // Quantidade das pizzas do cliente por pedido
     int ID;         // Usado para verificar a existência da conta
     int Contador;   // Utilizado para interagir com Pizzas,Tamanhos e quantidade;
     bool logado;    // Utilizado para validação de login (Atualmente só funciona com Admin)
@@ -96,7 +89,7 @@ struct Login{
     int numSessoes;             // Contador de sessoes
 };
 
-// Struct Pizzas! (2.0) (Também veio da versão 2 e está sendo reutilizado agora!)
+// Struct Pizzas!
 struct Pizzas{
     int QntSalgadas, QntDoces, QntGeral; // Contadores de pizzas
     char *salgadas[100][100];
@@ -106,7 +99,7 @@ struct Pizzas{
     float precos[3];
 };
 
-// Struct Menus (Struct geral para prints)
+// Struct Menus (Struct geral para prints de menus)
 struct Menu{
     char *Items[100];
     char title[100];
@@ -281,16 +274,18 @@ int main(){
     // Admin
     char AdmNome[100] = "Admin";
     char AdmUser[100] = "adm@gmail.com";
-    char admSenha[100] = "adm123";
+    char AdmSenha[100] = "adm123";
     // Funcionário
     char FuncNome[100] = "Funcionário";
     char FuncUser[100] = "func@gmail.com";
     char FuncSenha[100] = "func123";
+    float FuncSal = 3000;
+    int FuncHoras = 160;
 
     // Registro (ADM e FUNC)
     strcpy(PassUsers[cPassUsers][0],AdmNome);
     strcpy(PassUsers[cPassUsers][1],AdmUser);
-    strcpy(PassUsers[cPassUsers][2],admSenha);
+    strcpy(PassUsers[cPassUsers][2],AdmSenha);
     cPassUsers++;
     strcpy(PassUsers[cPassUsers][0],FuncNome);
     strcpy(PassUsers[cPassUsers][1],FuncUser);
@@ -303,7 +298,7 @@ int main(){
 
     lojas.Lucros[0] = rand() % 5000 + 10000;
     lojas.Gastos[0] = rand() % 5000 + 7500;
-    lojas.Renda[0] = lojas.Renda[0] + lojas.Gastos[0];
+    lojas.Renda[0] = lojas.Lucros[0] + lojas.Gastos[0];
     lojas.Cidades[0] = "Águas Claras Norte";
     lojas.Enderecos[0] = "Rua 10 Lote 3";
     lojas.Salas[0] = rand() % 3 + 2;
@@ -311,7 +306,7 @@ int main(){
 
     lojas.Lucros[1] = rand() % 5000 + 10000;
     lojas.Gastos[1] = rand() % 5000 + 7500;
-    lojas.Renda[1] = lojas.Renda[1] + lojas.Gastos[1];
+    lojas.Renda[1] = lojas.Lucros[1] + lojas.Gastos[1];
     lojas.Cidades[1] = "Taguatinga Norte";
     lojas.Enderecos[1] = "CND 14 Lote 10";
     lojas.Salas[1] = rand() % 3 + 2;
@@ -319,7 +314,7 @@ int main(){
 
     lojas.Lucros[2] = rand() % 5000 + 10000;
     lojas.Gastos[2] = rand() % 5000 + 7500;
-    lojas.Renda[2] = lojas.Renda[2] + lojas.Gastos[2];
+    lojas.Renda[2] = lojas.Lucros[2] + lojas.Gastos[2];
     lojas.Cidades[2] = "Vicente Pires";
     lojas.Enderecos[2] = "Rua 5 Lote 28";
     lojas.Salas[2] = rand() % 3 + 2;
@@ -488,7 +483,7 @@ int main(){
     UserMenu.Items[0] = "Fazer um pedido";
     UserMenu.Items[1] = "Ver resumo do pedido";
     UserMenu.Items[2] = "Locais de retirada";
-    UserMenu.Items[3] = "Cadastrar endereço";
+    UserMenu.Items[3] = "Modificar endereço";
     UserMenu.Items[4] = "Ver sua conta";
     UserMenu.Items[5] = "Sair";
     UserMenu.Tamanho = 6;
@@ -498,18 +493,18 @@ int main(){
     AdmMenu.Items[0] = "Consultar Lojas";
     AdmMenu.Items[1] = "Receita do mês";
     AdmMenu.Items[2] = "Pedidos do dia";
-    AdmMenu.Items[3] = "Sair";
-    AdmMenu.Tamanho = 4;
+    AdmMenu.Items[3] = "Informações de acessos";
+    AdmMenu.Items[4] = "Sair";
+    AdmMenu.Tamanho = 5;
 
     struct Menu AccMenu;
     strcpy(AccMenu.title,"- MUDANÇA DE INFORMAÇÕES -");
     AccMenu.Items[0] = "Nome em conta";
-    AccMenu.Items[1] = "Endereço";
-    AccMenu.Items[2] = "Telefone";
-    AccMenu.Items[3] = "Usuário";
-    AccMenu.Items[4] = "Senha";
-    AccMenu.Items[5] = "Voltar";
-    AccMenu.Tamanho = 6;
+    AccMenu.Items[1] = "Telefone";
+    AccMenu.Items[2] = "Usuário";
+    AccMenu.Items[3] = "Senha";
+    AccMenu.Items[4] = "Voltar";
+    AccMenu.Tamanho = 5;
 
     struct Menu FuncMenu;
     FuncMenu.Items[0] = "Resumo da rede pizzaria";
@@ -576,7 +571,7 @@ int main(){
                 printf("> Senha:   ");
                 scanf("%s",&user_atual.senha);
                 fflush(stdin);
-                int cmpSenha = strcmp(user_atual.senha, admSenha);
+                int cmpSenha = strcmp(user_atual.senha, AdmSenha);
                 Animation();
                 bool contaReal = false;     // Serve como verificador de existência das contas (Por padrão é false)
                 bool senhaErrada = false;   // Serve como verificador de senhas por usuário    (Por padrão é false)
@@ -740,6 +735,7 @@ int main(){
                             option = option%48;
                         }
                         system("cls");
+                        int NavOpt, ValChar;
                         switch (option) {
                             case 1:
                                 strcenter(line,"Informação das lojas",32,false);
@@ -762,13 +758,102 @@ int main(){
                                 break;
 
                             case 4:
+                                do{
+                                    system("cls");
+                                    strcenter(line,"- Informações de acesso! -",32,false);
+                                    printf("1. Acesso de Admin:\n");
+                                    printf("> Usuário: %s\n",AdmUser);
+                                    printf("> Senha:   %s\n\n",AdmSenha);
+                                    printf("2. Acesso de funcionário:\n");
+                                    printf("> Usuário: %s\n",FuncUser);
+                                    printf("> Senha:   %s\n\n",FuncSenha);
+                                    printf("3. Voltar\n");
+                                    printf("%s\n> ",line);
+                                    NavOpt = getch();
+                                    printf("%c",NavOpt);
+                                    Sleep(20);
+                                    if(NavOpt >= 48 && NavOpt <= 57){ // 0 a 9 são respectivamente as teclas de número 48 a 57 do teclado
+                                        NavOpt = NavOpt%48;
+                                    }
+
+                                    if(NavOpt == 1){
+                                        ValChar = 0;
+                                        do{
+                                            system("cls");
+                                            strcenter(line,"- Modifcação de conta de administrador -",32,false);
+                                            printf("> Novo usuário: ");
+                                            scanf("%s",&AdmUser);
+                                            ValChar = ValInfo(AdmUser[0],AlphaNums);
+                                            if(ValChar == 0){
+                                                strcenter(line,RED"- ERROR: USUÁRIO INVÁLIDO -"RST,32,true);
+                                                Sleep(800);
+                                            }
+                                        } while (ValChar == 0);
+                                        
+                                        ValChar = 0;
+                                        do{
+                                            system("cls");
+                                            strcenter(line,"- Modifcação de conta de administrador -",32,false);
+                                            printf("> Novo usuário: %s\n",AdmUser);
+                                            printf("> Nova senha:   ");
+                                            scanf("%s",&AdmSenha);
+                                            ValChar = ValInfo(AdmSenha[0],AlphaNums);
+                                            if(ValChar == 0){
+                                                strcenter(line,RED"- ERROR: SENHA INVÁLIDA -"RST,32,true);
+                                                Sleep(800);
+                                            }
+                                        } while (ValChar == 0);
+                                        fflush(stdin);
+                                    }
+
+                                    else if(NavOpt == 2){
+                                        ValChar = 0;
+                                        do{
+                                            system("cls");
+                                            strcenter(line,"- Modifcação de conta de funcionário -",32,false);
+                                            printf("> Novo usuário: ");
+                                            scanf("%s",&FuncUser);
+                                            ValChar = ValInfo(FuncUser[0],AlphaNums);
+                                            if(ValChar == 0){
+                                                strcenter(line,RED"- ERROR: USUÁRIO INVÁLIDO -"RST,32,true);
+                                                Sleep(800);
+                                            }
+                                        } while (ValChar == 0);
+                                        
+                                        ValChar = 0;
+                                        do{
+                                            system("cls");
+                                            strcenter(line,"- Modifcação de conta de funcionário -",32,false);
+                                            printf("> Novo usuário: %s\n",FuncUser);
+                                            printf("> Nova senha:   ");
+                                            scanf("%s",&FuncSenha);
+                                            ValChar = ValInfo(FuncSenha[0],AlphaNums);
+                                            if(ValChar == 0){
+                                                strcenter(line,RED"- ERROR: SENHA INVÁLIDA -"RST,32,true);
+                                                Sleep(800);
+                                            }
+                                        } while (ValChar == 0);
+                                        fflush(stdin);
+                                    }
+
+                                    else if(NavOpt == 3 || NavOpt == 27){
+                                        break;
+                                    }
+                                    else{
+                                        strcenter(line,RED"- ERROR: OPÇÃO INVÁLIDA! -"RST,32,true);
+                                        Sleep(800);
+                                    }
+                                } while (NavOpt != 3 && NavOpt != 27);
                                 break;
-                                
+                            
+                            case 5:
+                                break;   
+                            
                             default:
                                 break;
                         }
                         system("cls");
-                    } while(option != 4);
+                    } while(option != 5);
                     user_atual.logado = true;
                 }
                 
@@ -966,49 +1051,6 @@ int main(){
 
                                         else if(InfoOpt == '2'){
                                             ValChar = 0;
-                                            system("cls");
-                                            strcenter(line,"- Cadastro de endereço -",32,false);
-                                            printf("> Cidade antiga:   %s\n",user_atual.endereco[0]);
-                                            printf("> Endereço antigo: %s\n",user_atual.endereco[1]);
-                                            do{
-                                                printf("> Nova cidade: ");
-                                                gets(user_atual.endereco[0]);
-                                                ValChar = ValInfo(user_atual.endereco[0][0],AlphaNums);
-                                                if(strlen(user_atual.endereco[0]) == 0 || ValChar == 0){
-                                                    strcenter(line,RED"ERROR: CIDADE INVÁLIDA"RST,32,true);
-                                                    Sleep(750);
-                                                    system("cls");
-                                                    strcenter(line,"- Cadastro de endereço -",32,false);
-                                                }
-                                            } while (strlen(user_atual.endereco[0]) == 0 || ValChar == 0);
-                                            
-                                            do{
-                                                system("cls");
-                                                strcenter(line,"- Cadastro de endereço -",32,false);
-                                                printf("> Nova Cidade: %s\n",user_atual.endereco[0]);
-                                                printf("> Novo endereço: ");
-                                                gets(user_atual.endereco[1]);
-                                                
-                                                ValChar = ValInfo(user_atual.endereco[1][0],AlphaNums);
-                                                if(strlen(user_atual.endereco[1]) == 0 || ValChar == 0){
-                                                    strcenter(line,RED"ERROR: CIDADE INVÁLIDA"RST,32,true);
-                                                    Sleep(750);
-                                                }
-                                            } while (strlen(user_atual.endereco[1]) == 0 || ValChar == 0);
-                                            strcpy(Enderecos[user_atual.ID][0],user_atual.endereco[0]);
-                                            fflush(stdin);
-                                            strcpy(Enderecos[user_atual.ID][1],user_atual.endereco[1]);
-                                            fflush(stdin);
-                                            system("cls");
-                                            strcenter(line,"- Informações da sua conta -",32,false);
-                                            printf("> Cidade nova:   %s\n",user_atual.endereco[0]);
-                                            printf("> Endereço novo: %s\n",user_atual.endereco[1]);
-                                            strcenter(line,GRN"ENDEREÇO TROCADO COM SUCESSO!"RST,32,true);
-                                            Sleep(1000);
-                                        }
-
-                                        else if(InfoOpt == '3'){
-                                            ValChar = 0;
                                             bool valTelefone = false;
                                             char newPhone[100];
                                             do{
@@ -1052,7 +1094,7 @@ int main(){
                                             Sleep(1000);
                                         }
 
-                                        else if(InfoOpt == '4'){
+                                        else if(InfoOpt == '3'){
                                             ValChar = 0;
                                             char newUser[100];
                                             do{
@@ -1087,7 +1129,7 @@ int main(){
                                             Sleep(1000);
                                         }
                                         
-                                        else if(InfoOpt == '5'){
+                                        else if(InfoOpt == '4'){
                                             ValChar = 0;
                                             char newPass[100];
                                             do{
@@ -1122,7 +1164,7 @@ int main(){
                                             Sleep(1000);
                                         }
                                         
-                                        else if(InfoOpt == '6'){
+                                        else if(InfoOpt == '5'){
                                             break;
                                         }
                                         
@@ -1130,7 +1172,7 @@ int main(){
                                             strcenter(line,RED"ERROR: OPÇÃO INVÁLIDA"RST,32,true);
                                             Sleep(750);
                                         }
-                                    } while (InfoOpt != '6');
+                                    } while (InfoOpt != '5');
                                 }
                             }
                         }
@@ -1202,6 +1244,8 @@ int main(){
 
                 // FUNC
                 else if(strcmp(user_atual.usuario,FuncUser) == 0 && strcmp(user_atual.senha,FuncSenha) == 0){
+                    strcenter(line,GRN"Logado com Sucesso!"RST,32,true);
+                    Sleep(600);
                     sprintf(FuncMenu.title,"- Bem vindo %s -",FuncNome);
                     free(FuncMenu.title);
                     int funcNav;
@@ -1225,7 +1269,12 @@ int main(){
                         }
                         else if(funcNav == 4){
                             strcenter(line,"- Informações da conta -",32,false);
-                            printf("COMMING SOON. . .\n%s\n",line);
+                            printf("> Nome:  %s\n",FuncNome);
+                            printf("Usuário: %s\n",FuncUser);
+                            printf("Senha:   %s\n",FuncSenha);
+                            printf("Salário: R$ %.2f\n",FuncSal);
+                            printf("Horas:   %ih\n",FuncHoras);
+                            printf("%s\n",line);
                             system("pause");
                         }
                         else if(funcNav == 5){
@@ -1250,4 +1299,5 @@ int main(){
             break;
         }
     } while(option != 5 && option != 27);
+    return 0;
 }
